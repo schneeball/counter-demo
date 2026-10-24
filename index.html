@@ -14,6 +14,53 @@
     .demo{background:#f0f5ef;border:1px dashed #9eb8a7;border-radius:7px;padding:16px;text-align:center}.demo img{max-width:100%;height:auto}.placeholder{font:700 1.7rem/1.2 ui-monospace,Consolas,monospace;letter-spacing:.09em;color:#3c654b}
     .small{font-size:.87rem;color:var(--muted)}ol{padding-left:24px}li{margin-bottom:8px}code,pre,textarea{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}code{font-size:.9em}textarea{display:block;resize:vertical;width:100%;min-height:190px;border:1px solid #b9c7bd;border-radius:7px;padding:12px;background:#f9fbfa;color:#203026;font-size:.82rem;line-height:1.5}
     label{display:block;font-weight:650;margin-bottom:6px}.input-row{display:flex;gap:9px;flex-wrap:wrap;margin:12px 0}.input-row input{flex:1;min-width:220px;padding:10px;border-radius:7px;border:1px solid #b9c7bd;font:inherit}button,.primary{display:inline-block;border:1px solid var(--accent);border-radius:7px;background:var(--accent);color:#fff;padding:9px 15px;font:650 .95rem system-ui,sans-serif;text-decoration:none;cursor:pointer}button:hover,.primary:hover{background:#18513b;color:#fff}button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #b6d9c2;outline-offset:2px}.inline-links{display:flex;gap:14px;flex-wrap:wrap;margin:16px 0 0}footer{border-top:1px solid var(--line);padding:20px 0 38px;font-size:.87rem;color:var(--muted)}
+
+  /* Stable counter preview area */
+#demo-output {
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Compact preview form */
+.counter-preview-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 110px auto;
+  gap: 10px;
+  align-items: end;
+  margin: 12px 0;
+}
+
+.counter-preview-row input {
+  width: 100%;
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid #b9c7bd;
+  border-radius: 7px;
+  font: inherit;
+}
+
+.counter-preview-row button {
+  white-space: nowrap;
+  min-height: 47px;
+}
+
+.counter-preview-row label {
+  font-size: .87rem;
+}
+
+/* Small screens */
+@media (max-width: 560px) {
+  .counter-preview-row {
+    grid-template-columns: minmax(0, 1fr) 95px;
+  }
+
+  .counter-preview-row button {
+    grid-column: 1 / -1;
+  }
+}
+  
   </style>
 </head>
 <body>
@@ -47,15 +94,39 @@
       </script>
     </div>
     <p class="small" style="margin-top:12px">The demo counter above records visits to this page. Enter another ID to preview its existing count here with a different style; the read-only viewer will not increment that counter.</p>
-    <label for="counter-id">Preview another counter ID</label>
-    <div class="input-row">
-      <input id="counter-id" type="text" autocomplete="off" placeholder="Enter a registered counter ID" maxlength="120" spellcheck="false">
-      <button type="button" id="activate">Preview without counting</button>
-    </div>
-    <label for="counter-style">Preview style (0–760)</label>
-    <div class="input-row">
-      <input id="counter-style" type="number" min="0" max="760" step="1" value="334">
-    </div>
+    
+    
+
+<div class="counter-preview-row">
+
+  <div>
+    <label for="counter-id">Counter ID</label>
+    <input id="counter-id"
+           type="text"
+           autocomplete="off"
+           placeholder="Enter counter ID"
+           maxlength="120"
+           spellcheck="false">
+  </div>
+
+  <div>
+    <label for="counter-style">Style (0–760)</label>
+    <input id="counter-style"
+           type="number"
+           min="0"
+           max="760"
+           step="1"
+           value="334">
+  </div>
+
+  <button type="button" id="activate">
+    Preview
+  </button>
+
+</div>
+
+
+    
     <p class="small" id="counter-status" role="status">Initial demo: style 760. Read-only previews: style 334.</p>
     <p><a class="primary" href="https://counter.gratis/?language=en">Create your free counter ↗</a></p>
   </section>
