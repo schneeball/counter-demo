@@ -52,6 +52,10 @@
       <input id="counter-id" type="text" autocomplete="off" placeholder="Enter a registered counter ID" maxlength="120" spellcheck="false">
       <button type="button" id="activate">Preview without counting</button>
     </div>
+    <label for="counter-style">Preview style (0–760)</label>
+    <div class="input-row">
+      <input id="counter-style" type="number" min="0" max="760" step="1" value="334">
+    </div>
     <p class="small" id="counter-status" role="status">Initial demo: style 760. Read-only previews: style 334.</p>
     <p><a class="primary" href="https://counter.gratis/?language=en">Create your free counter ↗</a></p>
   </section>
@@ -65,9 +69,8 @@
     </ol>
     <p>The following HTML-only embed is for installation on your own site. Unlike the read-only viewer above, it records actual visits. The explicit HTML=1 parameter marks it as an HTML-only request.</p>
     <label for="embed-code">HTML-only example</label>
-<textarea id="embed-code" readonly spellcheck="false"
-          aria-label="HTML-only counter embed code">&lt;!-- Replace YOUR_COUNTER_ID with your registered counter ID --&gt;
-&lt;a href="https://counter.gratis/?language=en&amp;ID=YOUR_COUNTER_ID"&gt;
+    <textarea id="embed-code" readonly spellcheck="false" aria-label="HTML-only counter embed code">&lt;!-- Replace YOUR_COUNTER_ID with your registered counter ID --&gt;
+&lt;a href="https://counter.gratis/?language=en"&gt;
   &lt;img src="https://besucherzaehler.gratis/counter.php?ID=YOUR_COUNTER_ID&amp;STYLE=334&amp;HTML=1"
        alt="Visitor counter" title="Visitor counter"&gt;
 &lt;/a&gt;</textarea>
@@ -90,28 +93,35 @@
 (function(){
   'use strict';
   const input=document.getElementById('counter-id');
+  const styleInput=document.getElementById('counter-style');
   const status=document.getElementById('counter-status');
   const code=document.getElementById('embed-code');
   const copyStatus=document.getElementById('copy-status');
   const demoImage=document.getElementById('cg_ebbbd');
   const demoLink=document.getElementById('counter-link');
   function showReadOnlyCounter(){
-    const id=input.value.trim();
+    const id=input.value.trim() || 'ebbbd';
     if(!/^[a-zA-Z0-9._-]{1,120}$/.test(id)){
       status.textContent='Enter a valid counter ID (letters, numbers, dots, underscores or hyphens).';
       return;
     }
-    // Read only: changing the ID must never call counter.php again.
+    const style=styleInput.value.trim();
+    if(!/^(?:0|[1-9][0-9]*)$/.test(style) || Number(style)>760){
+      status.textContent='Enter a whole-number style between 0 and 760.';
+      return;
+    }
+    // Read only: changing the ID or style must never call counter.php again.
     demoImage.src='https://besucherzaehler.gratis/viewer.php?ID='
-      +encodeURIComponent(id)+'&STYLE=334';
+      +encodeURIComponent(id)+'&STYLE='+encodeURIComponent(style);
     demoImage.alt='Read-only counter preview for '+id;
     demoLink.href='https://counter.gratis/?language=en&ID='+encodeURIComponent(id);
-    status.textContent='Read-only preview for '+id+' (style 334). No visit recorded for this ID.';
+    status.textContent='Read-only preview for '+id+' (style '+style+'). No visit recorded for this ID.';
   }
   document.getElementById('activate').addEventListener('click',showReadOnlyCounter);
   input.addEventListener('change',function(){
     if(input.value.trim()) showReadOnlyCounter();
   });
+  styleInput.addEventListener('change',showReadOnlyCounter);
   input.addEventListener('keydown',function(event){
     if(event.key==='Enter'){
       event.preventDefault();
