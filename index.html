@@ -90,7 +90,7 @@
   const code=document.getElementById('embed-code');
   const copyStatus=document.getElementById('copy-status');
   function embed(id){
-    return '<!-- HTML-only counter from counter.gratis -->\n<a href="https://counter.gratis/?language=en&ID='+encodeURIComponent(id)+'">\n  <img src="https://besucherzaehler.gratis/counter.php?ID='+encodeURIComponent(id)+'&STYLE=334"\n       alt="Visitor counter" title="Visitor counter">\n</a>';
+    return '<!-- HTML-only counter from counter.gratis -->\n<a href="https://counter.gratis/?language=en&ID='+encodeURIComponent(id)+'">\n  <img src="https://besucherzaehler.gratis/counter.php?ID='+encodeURIComponent(id)+'&STYLE=334&HTML=1"\n       alt="Visitor counter" title="Visitor counter">\n</a>';
   }
   document.getElementById('activate').addEventListener('click',function(){
     const id=input.value.trim();
