@@ -197,8 +197,8 @@
       return;
     }
     const style=styleInput.value.trim();
-    if(!/^(?:0|[1-9][0-9]*)$/.test(style) || Number(style)>760){
-      status.textContent='Enter a whole-number style between 0 and 760.';
+    if(!/^(?:0|[1-9][0-9]*)$/.test(style) || Number(style)>762){
+      status.textContent='Enter a whole-number style between 0 and 762.';
       return;
     }
     // Read only: changing the ID or style must never call counter.php again.
