@@ -212,76 +212,95 @@
             justify-content: center;
         }
 
-        /* Compact preview form */
+        /* Compact preview form: equal-height controls and uniform spacing. */
         .counter-preview-row {
             display: grid;
-            grid-template-columns: minmax(0, 1fr) 110px auto;
-            gap: 10px;
+            grid-template-columns: minmax(0, 1fr) 100px 178px auto;
+            gap: 8px;
             align-items: end;
             margin: 12px 0;
         }
 
-        .counter-preview-row input {
-            width: 100%;
+        .counter-preview-row > div {
             min-width: 0;
-            padding: 10px;
-            border: 1px solid #b9c7bd;
-            border-radius: 7px;
-            font: inherit;
-        }
-
-        .counter-preview-row button {
-            white-space: nowrap;
-            min-height: 47px;
         }
 
         .counter-preview-row label {
             font-size: .87rem;
+            margin-bottom: 5px;
+            white-space: nowrap;
         }
 
-
-        /* Background palette for the preview card only. */
-        .preview-background-controls {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 9px;
-            margin: 8px 0 14px;
-        }
-        .preview-background-controls .palette-label {
-            font-size: .87rem;
-            font-weight: 650;
-            margin: 0 5px 0 0;
-        }
-        .preview-swatch {
-            width: 28px;
-            height: 28px;
-            padding: 0;
-            border: 2px solid #b9c7bd;
-            border-radius: 6px;
-            background: var(--swatch-color);
-            cursor: pointer;
-        }
-        .preview-swatch[aria-pressed="true"] {
-            border-color: #25332d;
-            box-shadow: 0 0 0 2px #fff inset;
-        }
-        .preview-background-controls input[type="color"] {
-            width: 38px;
-            height: 32px;
-            padding: 2px;
+        .counter-preview-row input {
+            box-sizing: border-box;
+            width: 100%;
+            min-width: 0;
+            height: 38px;
+            padding: 7px 9px;
             border: 1px solid #b9c7bd;
-            border-radius: 6px;
-            cursor: pointer;
+            border-radius: 7px;
             background: #fff;
+            font: inherit;
         }
 
-        /* Small screens */
-        @media (max-width: 560px) {
-            .counter-preview-row {
-                grid-template-columns: minmax(0, 1fr) 95px;
-            }
+        .counter-preview-row button {
+            box-sizing: border-box;
+            height: 38px;
+            min-height: 38px;
+            padding: 7px 12px;
+            margin: 0;
+            white-space: nowrap;
+        }
 
+        .preview-background-inputs {
+            display: grid;
+            grid-template-columns: 38px minmax(0, 1fr);
+            gap: 6px;
+            align-items: center;
+        }
+
+        .counter-preview-row .preview-background-inputs input[type="color"] {
+            display: block;
+            width: 38px;
+            height: 38px;
+            padding: 3px;
+            cursor: pointer;
+        }
+
+        .counter-preview-row .preview-background-inputs input[type="text"] {
+            width: 100%;
+            height: 38px;
+            min-width: 0;
+            padding: 7px 8px;
+            background: #fff;
+            border: 1px solid #93a99a;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,.04);
+            font: .84rem ui-monospace, Consolas, monospace;
+        }
+
+        .counter-preview-row .preview-background-inputs input[aria-invalid="true"] {
+            border-color: #b91c1c;
+        }
+
+        @media (max-width: 640px) {
+            .counter-preview-row {
+                grid-template-columns: minmax(0, 1fr) 100px;
+            }
+            .preview-background-field {
+                grid-column: 1;
+            }
+            .counter-preview-row button {
+                grid-column: 2;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .counter-preview-row {
+                grid-template-columns: minmax(0, 1fr) 90px;
+            }
+            .preview-background-field {
+                grid-column: 1 / -1;
+            }
             .counter-preview-row button {
                 grid-column: 1 / -1;
             }
@@ -345,6 +364,16 @@
                         value="334">
                 </div>
 
+                <div class="preview-background-field">
+                    <label for="preview-background-hex">Background</label>
+                    <div class="preview-background-inputs">
+                        <input id="preview-background-color" type="color" value="#f0f5ef" aria-label="Choose background color">
+                        <input id="preview-background-hex" type="text" value="#f0f5ef"
+                            maxlength="7" autocomplete="off" spellcheck="false"
+                            aria-label="Background HEX color, e.g. #34aabb">
+                    </div>
+                </div>
+
                 <button type="button" id="activate">
                     Preview
                 </button>
@@ -352,19 +381,6 @@
             </div>
 
 
-
-            <div class="preview-background-controls" aria-label="Counter preview background">
-                <span class="palette-label">Background</span>
-                <button type="button" class="preview-swatch" data-bg="#f0f5ef" style="--swatch-color:#f0f5ef" aria-label="Pale green" aria-pressed="true"></button>
-                <button type="button" class="preview-swatch" data-bg="#ffffff" style="--swatch-color:#ffffff" aria-label="White" aria-pressed="false"></button>
-                <button type="button" class="preview-swatch" data-bg="#e7eff9" style="--swatch-color:#e7eff9" aria-label="Pale blue" aria-pressed="false"></button>
-                <button type="button" class="preview-swatch" data-bg="#fff1d6" style="--swatch-color:#fff1d6" aria-label="Warm cream" aria-pressed="false"></button>
-                <button type="button" class="preview-swatch" data-bg="#d1d5db" style="--swatch-color:#d1d5db" aria-label="Gray" aria-pressed="false"></button>
-                <button type="button" class="preview-swatch" data-bg="#25332d" style="--swatch-color:#25332d" aria-label="Dark green" aria-pressed="false"></button>
-                <button type="button" class="preview-swatch" data-bg="#111827" style="--swatch-color:#111827" aria-label="Dark navy" aria-pressed="false"></button>
-                <label for="preview-background-color" class="small" style="margin:0">Custom</label>
-                <input id="preview-background-color" type="color" value="#f0f5ef" aria-label="Custom preview background color">
-            </div>
 
             <p class="small" id="counter-status" role="status">Initial demo: style 760. Read-only previews: style 334.</p>
             <p><a class="primary" href="https://counter.gratis/?language=en">Create your free counter ↗</a></p>
@@ -430,24 +446,32 @@
             const demoImage = document.getElementById('cg_ebbbd');
             const demoLink = document.getElementById('counter-link');
 
-            // Change the preview card background without reloading the counter.
+            // Background only: no counter.php or viewer.php request is made.
             const previewCard = document.getElementById('demo-output');
             const backgroundPicker = document.getElementById('preview-background-color');
-            const backgroundSwatches = document.querySelectorAll('.preview-swatch');
+            const backgroundHex = document.getElementById('preview-background-hex');
             function setPreviewBackground(color) {
                 previewCard.style.backgroundColor = color;
                 backgroundPicker.value = color;
-                backgroundSwatches.forEach(function(button) {
-                    button.setAttribute('aria-pressed', String(button.dataset.bg.toLowerCase() === color.toLowerCase()));
-                });
+                backgroundHex.value = color;
+                backgroundHex.setAttribute('aria-invalid', 'false');
             }
-            backgroundSwatches.forEach(function(button) {
-                button.addEventListener('click', function() {
-                    setPreviewBackground(button.dataset.bg);
-                });
-            });
             backgroundPicker.addEventListener('input', function() {
                 setPreviewBackground(backgroundPicker.value);
+            });
+            backgroundHex.addEventListener('input', function() {
+                const value = backgroundHex.value.trim();
+                if (/^#[0-9a-fA-F]{6}$/.test(value)) {
+                    setPreviewBackground(value.toLowerCase());
+                } else {
+                    backgroundHex.setAttribute('aria-invalid', 'true');
+                }
+            });
+            backgroundHex.addEventListener('blur', function() {
+                if (backgroundHex.getAttribute('aria-invalid') === 'true') {
+                    backgroundHex.value = backgroundPicker.value;
+                    backgroundHex.setAttribute('aria-invalid', 'false');
+                }
             });
 
             function showReadOnlyCounter() {
