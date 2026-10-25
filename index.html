@@ -1,230 +1,498 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="A minimal, practical guide to adding a free visible visitor counter to a GitHub Pages website using counter.gratis.">
-  <title>Free Visitor Counter for GitHub Pages — counter.gratis Demo</title>
-  <style>
-    :root{color-scheme:light;--ink:#25332d;--muted:#526359;--line:#d9e0d9;--accent:#236a4f;--paper:#fff;--bg:#f6f8f5}
-    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}
-    main,footer{width:min(790px,calc(100% - 36px));margin-inline:auto}main{padding:44px 0 30px}h1{font-size:clamp(1.8rem,4vw,2.7rem);line-height:1.16;letter-spacing:-.035em;margin:8px 0 16px}
-    h2{font-size:1.3rem;margin:0 0 12px}p{margin:0 0 14px}a{color:var(--accent);text-underline-offset:3px}.eyebrow{text-transform:uppercase;letter-spacing:.1em;font-size:.78rem;font-weight:750;color:var(--accent)}
-    .lead{font-size:1.08rem;color:var(--muted);max-width:690px}.panel{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:22px;margin-top:20px}.panel p:last-child{margin-bottom:0}
-    .demo{background:#f0f5ef;border:1px dashed #9eb8a7;border-radius:7px;padding:16px;text-align:center}.demo img{max-width:100%;height:auto}.placeholder{font:700 1.7rem/1.2 ui-monospace,Consolas,monospace;letter-spacing:.09em;color:#3c654b}
-    .small{font-size:.87rem;color:var(--muted)}ol{padding-left:24px}li{margin-bottom:8px}code,pre,textarea{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}code{font-size:.9em}textarea{display:block;resize:vertical;width:100%;min-height:190px;border:1px solid #b9c7bd;border-radius:7px;padding:12px;background:#f9fbfa;color:#203026;font-size:.82rem;line-height:1.5}
-    label{display:block;font-weight:650;margin-bottom:6px}.input-row{display:flex;gap:9px;flex-wrap:wrap;margin:12px 0}.input-row input{flex:1;min-width:220px;padding:10px;border-radius:7px;border:1px solid #b9c7bd;font:inherit}button,.primary{display:inline-block;border:1px solid var(--accent);border-radius:7px;background:var(--accent);color:#fff;padding:9px 15px;font:650 .95rem system-ui,sans-serif;text-decoration:none;cursor:pointer}button:hover,.primary:hover{background:#18513b;color:#fff}button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #b6d9c2;outline-offset:2px}.inline-links{display:flex;gap:14px;flex-wrap:wrap;margin:16px 0 0}footer{border-top:1px solid var(--line);padding:20px 0 38px;font-size:.87rem;color:var(--muted)}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A minimal, practical guide to adding a free visible visitor counter to a GitHub Pages website using counter.gratis.">
+    <title>Free Visitor Counter for GitHub Pages — counter.gratis Demo</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --ink: #25332d;
+            --muted: #526359;
+            --line: #d9e0d9;
+            --accent: #236a4f;
+            --paper: #fff;
+            --bg: #f6f8f5
+        }
 
-  /* Stable counter preview area */
-#demo-output {
-  min-height: 120px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+        * {
+            box-sizing: border-box
+        }
 
-/* Compact preview form */
-.counter-preview-row {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 110px auto;
-  gap: 10px;
-  align-items: end;
-  margin: 12px 0;
-}
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--ink);
+            font: 16px/1.65 system-ui, -apple-system, "Segoe UI", sans-serif
+        }
 
-.counter-preview-row input {
-  width: 100%;
-  min-width: 0;
-  padding: 10px;
-  border: 1px solid #b9c7bd;
-  border-radius: 7px;
-  font: inherit;
-}
+        main,
+        footer {
+            width: min(790px, calc(100% - 36px));
+            margin-inline: auto
+        }
 
-.counter-preview-row button {
-  white-space: nowrap;
-  min-height: 47px;
-}
+        main {
+            padding: 44px 0 30px
+        }
 
-.counter-preview-row label {
-  font-size: .87rem;
-}
+        h1 {
+            font-size: clamp(1.8rem, 4vw, 2.7rem);
+            line-height: 1.16;
+            letter-spacing: -.035em;
+            margin: 8px 0 16px
+        }
 
-/* Small screens */
-@media (max-width: 560px) {
-  .counter-preview-row {
-    grid-template-columns: minmax(0, 1fr) 95px;
-  }
+        h2 {
+            font-size: 1.3rem;
+            margin: 0 0 12px
+        }
 
-  .counter-preview-row button {
-    grid-column: 1 / -1;
-  }
-}
-  
-  </style>
+        p {
+            margin: 0 0 14px
+        }
+
+        a {
+            color: var(--accent);
+            text-underline-offset: 3px
+        }
+
+        .eyebrow {
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            font-size: .78rem;
+            font-weight: 750;
+            color: var(--accent)
+        }
+
+        .lead {
+            font-size: 1.08rem;
+            color: var(--muted);
+            max-width: 690px
+        }
+
+        .panel {
+            background: var(--paper);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 22px;
+            margin-top: 20px
+        }
+
+        .panel p:last-child {
+            margin-bottom: 0
+        }
+
+        .demo {
+            background: #f0f5ef;
+            border: 1px dashed #9eb8a7;
+            border-radius: 7px;
+            padding: 16px;
+            text-align: center
+        }
+
+        .demo img {
+            max-width: 100%;
+            height: auto
+        }
+
+        .placeholder {
+            font: 700 1.7rem/1.2 ui-monospace, Consolas, monospace;
+            letter-spacing: .09em;
+            color: #3c654b
+        }
+
+        .small {
+            font-size: .87rem;
+            color: var(--muted)
+        }
+
+        ol {
+            padding-left: 24px
+        }
+
+        li {
+            margin-bottom: 8px
+        }
+
+        code,
+        pre,
+        textarea {
+            font-family: ui-monospace, SFMono-Regular, Consolas, monospace
+        }
+
+        code {
+            font-size: .9em
+        }
+
+        textarea {
+            display: block;
+            resize: vertical;
+            width: 100%;
+            min-height: 190px;
+            border: 1px solid #b9c7bd;
+            border-radius: 7px;
+            padding: 12px;
+            background: #f9fbfa;
+            color: #203026;
+            font-size: .82rem;
+            line-height: 1.5
+        }
+
+        label {
+            display: block;
+            font-weight: 650;
+            margin-bottom: 6px
+        }
+
+        .input-row {
+            display: flex;
+            gap: 9px;
+            flex-wrap: wrap;
+            margin: 12px 0
+        }
+
+        .input-row input {
+            flex: 1;
+            min-width: 220px;
+            padding: 10px;
+            border-radius: 7px;
+            border: 1px solid #b9c7bd;
+            font: inherit
+        }
+
+        button,
+        .primary {
+            display: inline-block;
+            border: 1px solid var(--accent);
+            border-radius: 7px;
+            background: var(--accent);
+            color: #fff;
+            padding: 9px 15px;
+            font: 650 .95rem system-ui, sans-serif;
+            text-decoration: none;
+            cursor: pointer
+        }
+
+        button:hover,
+        .primary:hover {
+            background: #18513b;
+            color: #fff
+        }
+
+        button:focus-visible,
+        a:focus-visible,
+        input:focus-visible,
+        textarea:focus-visible {
+            outline: 3px solid #b6d9c2;
+            outline-offset: 2px
+        }
+
+        .inline-links {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin: 16px 0 0
+        }
+
+        footer {
+            border-top: 1px solid var(--line);
+            padding: 20px 0 38px;
+            font-size: .87rem;
+            color: var(--muted)
+        }
+
+        /* Stable counter preview area */
+        #demo-output {
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Compact preview form */
+        .counter-preview-row {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 110px auto;
+            gap: 10px;
+            align-items: end;
+            margin: 12px 0;
+        }
+
+        .counter-preview-row input {
+            width: 100%;
+            min-width: 0;
+            padding: 10px;
+            border: 1px solid #b9c7bd;
+            border-radius: 7px;
+            font: inherit;
+        }
+
+        .counter-preview-row button {
+            white-space: nowrap;
+            min-height: 47px;
+        }
+
+        .counter-preview-row label {
+            font-size: .87rem;
+        }
+
+
+        /* Background palette for the preview card only. */
+        .preview-background-controls {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 9px;
+            margin: 8px 0 14px;
+        }
+        .preview-background-controls .palette-label {
+            font-size: .87rem;
+            font-weight: 650;
+            margin: 0 5px 0 0;
+        }
+        .preview-swatch {
+            width: 28px;
+            height: 28px;
+            padding: 0;
+            border: 2px solid #b9c7bd;
+            border-radius: 6px;
+            background: var(--swatch-color);
+            cursor: pointer;
+        }
+        .preview-swatch[aria-pressed="true"] {
+            border-color: #25332d;
+            box-shadow: 0 0 0 2px #fff inset;
+        }
+        .preview-background-controls input[type="color"] {
+            width: 38px;
+            height: 32px;
+            padding: 2px;
+            border: 1px solid #b9c7bd;
+            border-radius: 6px;
+            cursor: pointer;
+            background: #fff;
+        }
+
+        /* Small screens */
+        @media (max-width: 560px) {
+            .counter-preview-row {
+                grid-template-columns: minmax(0, 1fr) 95px;
+            }
+
+            .counter-preview-row button {
+                grid-column: 1 / -1;
+            }
+        }
+    </style>
 </head>
+
 <body>
-<main>
-  <div class="eyebrow">GitHub Pages · Working installation example</div>
-  <h1>Free Visitor Counter for GitHub Pages</h1>
-  <p class="lead">Add a visible counter to a static GitHub Pages website with <a href="https://counter.gratis/?language=en">counter.gratis</a>. No server-side code is required: the counter image is delivered by the counter service.</p>
+    <main>
+        <div class="eyebrow">GitHub Pages · Working installation example</div>
+        <h1>Free Visitor Counter for GitHub Pages</h1>
+        <p class="lead">Add a visible counter to a static GitHub Pages website with <a href="https://counter.gratis/?language=en">counter.gratis</a>. No server-side code is required: the counter image is delivered by the counter service.</p>
 
-  <section class="panel" aria-labelledby="demo-title">
-    <h2 id="demo-title">Live counter on this page</h2>
-    <div class="demo" id="demo-output" aria-live="polite">
-      <!-- The real demo counter counts once on the initial page load. -->
-      <a id="counter-link" href="https://counter.gratis/?language=en&amp;ID=ebbbd" target="_top">
-        <img id="cg_ebbbd"
-             src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
-             alt="Live visitor counter" title="Counter statistics">
-        <noscript><img src="https://besucherzaehler.gratis/counter.php?ID=ebbbd&amp;STYLE=760&amp;HTML=1"
-                       alt="Live visitor counter"></noscript>
-      </a>
-      <script>
-        (function(img, url) {
-          if (!img) return;
-          img.src = url
-            + '&LANG=' + encodeURIComponent(navigator.language)
-            + '&RES=' + screen.width + 'x' + screen.height
-            + '&REF=' + encodeURIComponent(document.referrer)
-            + '&LOC=' + encodeURIComponent(location.href)
-            + '&NAVI=' + encodeURIComponent(navigator.userAgent);
-        })(document.getElementById('cg_ebbbd'),
-           'https://besucherzaehler.gratis/counter.php?ID=ebbbd&STYLE=760');
-      </script>
-    </div>
-    <p class="small" style="margin-top:12px">The demo counter above records visits to this page. Enter another ID to preview its existing count here with a different style; the read-only viewer will not increment that counter.</p>
-    
-    
-
-<div class="counter-preview-row">
-
-  <div>
-    <label for="counter-id">Counter ID</label>
-    <input id="counter-id"
-           type="text"
-           autocomplete="off"
-           placeholder="Enter counter ID"
-           maxlength="120"
-           spellcheck="false">
-  </div>
-
-  <div>
-    <label for="counter-style">Style (0–762)</label>
-    <input id="counter-style"
-           type="number"
-           min="0"
-           max="762"
-           step="1"
-           value="334">
-  </div>
-
-  <button type="button" id="activate">
-    Preview
-  </button>
-
-</div>
+        <section class="panel" aria-labelledby="demo-title">
+            <h2 id="demo-title">Live counter on this page</h2>
+            <div class="demo" id="demo-output" aria-live="polite">
+                <!-- The real demo counter counts once on the initial page load. -->
+                <a id="counter-link" href="https://counter.gratis/?language=en&amp;ID=ebbbd" target="_top">
+                    <img id="cg_ebbbd"
+                        src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
+                        alt="Live visitor counter" title="Counter statistics">
+                    <noscript><img src="https://besucherzaehler.gratis/counter.php?ID=ebbbd&amp;STYLE=760&amp;HTML=1"
+                            alt="Live visitor counter"></noscript>
+                </a>
+                <script>
+                    (function(img, url) {
+                        if (!img) return;
+                        img.src = url +
+                            '&LANG=' + encodeURIComponent(navigator.language) +
+                            '&RES=' + screen.width + 'x' + screen.height +
+                            '&REF=' + encodeURIComponent(document.referrer) +
+                            '&LOC=' + encodeURIComponent(location.href) +
+                            '&NAVI=' + encodeURIComponent(navigator.userAgent);
+                    })(document.getElementById('cg_ebbbd'),
+                        'https://besucherzaehler.gratis/counter.php?ID=ebbbd&STYLE=760');
+                </script>
+            </div>
+            <p class="small" style="margin-top:12px">The demo counter above records visits to this page. Enter another ID to preview its existing count here with a different style; the read-only viewer will not increment that counter.</p>
 
 
-    
-    <p class="small" id="counter-status" role="status">Initial demo: style 760. Read-only previews: style 334.</p>
-    <p><a class="primary" href="https://counter.gratis/?language=en">Create your free counter ↗</a></p>
-  </section>
 
-  <section class="panel" aria-labelledby="install-title">
-    <h2 id="install-title">Install it on GitHub Pages</h2>
-    <ol>
-      <li><a href="https://counter.gratis/?language=en">Create a counter</a> and choose a design.</li>
-      <li>Copy the embed code provided by counter.gratis into your GitHub Pages <code>index.html</code> or another HTML page.</li>
-      <li>Commit the change to the repository's published branch. The counter will appear when the page is published.</li>
-    </ol>
-  </section>
-    
-  <section class="panel" aria-labelledby="html-only" id="html-only">
+            <div class="counter-preview-row">
 
-<h2>HTML-only Embed — No JavaScript Required</h2>
+                <div>
+                    <label for="counter-id">Counter ID</label>
+                    <input id="counter-id"
+                        type="text"
+                        autocomplete="off"
+                        placeholder="Enter counter ID"
+                        maxlength="120"
+                        spellcheck="false">
+                </div>
 
-<p>
-  The HTML-only embed below is intended for websites,
-  hosting platforms, and forums that do not allow JavaScript.
-  Where JavaScript is supported, the standard JavaScript
-  embed is recommended for more detailed tracking.
-</p>
+                <div>
+                    <label for="counter-style">Style (0–762)</label>
+                    <input id="counter-style"
+                        type="number"
+                        min="0"
+                        max="762"
+                        step="1"
+                        value="334">
+                </div>
 
-<p>
-  Unlike the read-only preview above, this HTML-only embed
-  records actual visits and pageviews. The
-  <code>HTML=1</code> parameter identifies the request
-  as an HTML-only counter.
-</p>
+                <button type="button" id="activate">
+                    Preview
+                </button>
 
-    
-    <label for="embed-code">HTML-only example</label>
-    <textarea id="embed-code" readonly spellcheck="false" aria-label="HTML-only counter embed code">&lt;!-- Replace YOUR_COUNTER_ID with your registered counter ID --&gt;
+            </div>
+
+
+
+            <div class="preview-background-controls" aria-label="Counter preview background">
+                <span class="palette-label">Background</span>
+                <button type="button" class="preview-swatch" data-bg="#f0f5ef" style="--swatch-color:#f0f5ef" aria-label="Pale green" aria-pressed="true"></button>
+                <button type="button" class="preview-swatch" data-bg="#ffffff" style="--swatch-color:#ffffff" aria-label="White" aria-pressed="false"></button>
+                <button type="button" class="preview-swatch" data-bg="#e7eff9" style="--swatch-color:#e7eff9" aria-label="Pale blue" aria-pressed="false"></button>
+                <button type="button" class="preview-swatch" data-bg="#fff1d6" style="--swatch-color:#fff1d6" aria-label="Warm cream" aria-pressed="false"></button>
+                <button type="button" class="preview-swatch" data-bg="#d1d5db" style="--swatch-color:#d1d5db" aria-label="Gray" aria-pressed="false"></button>
+                <button type="button" class="preview-swatch" data-bg="#25332d" style="--swatch-color:#25332d" aria-label="Dark green" aria-pressed="false"></button>
+                <button type="button" class="preview-swatch" data-bg="#111827" style="--swatch-color:#111827" aria-label="Dark navy" aria-pressed="false"></button>
+                <label for="preview-background-color" class="small" style="margin:0">Custom</label>
+                <input id="preview-background-color" type="color" value="#f0f5ef" aria-label="Custom preview background color">
+            </div>
+
+            <p class="small" id="counter-status" role="status">Initial demo: style 760. Read-only previews: style 334.</p>
+            <p><a class="primary" href="https://counter.gratis/?language=en">Create your free counter ↗</a></p>
+        </section>
+
+        <section class="panel" aria-labelledby="install-title">
+            <h2 id="install-title">Install it on GitHub Pages</h2>
+            <ol>
+                <li><a href="https://counter.gratis/?language=en">Create a counter</a> and choose a design.</li>
+                <li>Copy the embed code provided by counter.gratis into your GitHub Pages <code>index.html</code> or another HTML page.</li>
+                <li>Commit the change to the repository's published branch. The counter will appear when the page is published.</li>
+            </ol>
+        </section>
+
+        <section class="panel" aria-labelledby="html-only" id="html-only">
+
+            <h2>HTML-only Embed — No JavaScript Required</h2>
+
+            <p>
+                The HTML-only embed below is intended for websites,
+                hosting platforms, and forums that do not allow JavaScript.
+                Where JavaScript is supported, the standard JavaScript
+                embed is recommended for more detailed tracking.
+            </p>
+
+            <p>
+                Unlike the read-only preview above, this HTML-only embed
+                records actual visits and pageviews. The
+                <code>HTML=1</code> parameter identifies the request
+                as an HTML-only counter.
+            </p>
+
+
+            <label for="embed-code">HTML-only example</label>
+            <textarea id="embed-code" readonly spellcheck="false" aria-label="HTML-only counter embed code">&lt;!-- Replace YOUR_COUNTER_ID with your registered counter ID --&gt;
 &lt;a href="https://counter.gratis/?language=en&amp;ID=YOUR_COUNTER_ID"&gt;
   &lt;img src="https://besucherzaehler.gratis/counter.php?ID=YOUR_COUNTER_ID&amp;STYLE=334&amp;HTML=1"
        alt="Visitor counter" title="Visitor counter"&gt;
 &lt;/a&gt;</textarea>
-    <div class="input-row"><button type="button" id="copy">Copy HTML</button><span class="small" id="copy-status" role="status"></span></div>
-  </section>
+            <div class="input-row"><button type="button" id="copy">Copy HTML</button><span class="small" id="copy-status" role="status"></span></div>
+        </section>
 
-  <section class="panel" aria-labelledby="stats-title">
-    <h2 id="stats-title">Visitors vs. pageviews</h2>
-    <p><strong>Visitors</strong> and <strong>pageviews</strong> are different measures. Repeated visits or page loads may increase pageviews without increasing the unique visitor count for the same day. A visible counter is a simple indicator, not a replacement for a full analytics service.</p>
-    <p>The standard JavaScript embed can send extra context, such as the visited URL and referring page. The HTML-only example above cannot supply the same browser information.</p>
-    <div class="inline-links">
-      <a href="https://counter.gratis/methodology.php?language=en">Counting methodology ↗</a>
-      <a href="https://website-counter-guide.netlify.app/">Website Counter Guide ↗</a>
-      <a href="https://counter.gratis/?language=en">Counter generator ↗</a>
-    </div>
-  </section>
-</main>
-<footer>Independent GitHub Pages compatibility demo for <a href="https://counter.gratis/?language=en">counter.gratis</a>. This demonstration is not the counter service itself.</footer>
-<script>
-(function(){
-  'use strict';
-  const input=document.getElementById('counter-id');
-  const styleInput=document.getElementById('counter-style');
-  const status=document.getElementById('counter-status');
-  const code=document.getElementById('embed-code');
-  const copyStatus=document.getElementById('copy-status');
-  const demoImage=document.getElementById('cg_ebbbd');
-  const demoLink=document.getElementById('counter-link');
-  function showReadOnlyCounter(){
-    const id=input.value.trim() || 'ebbbd';
-    if(!/^[a-zA-Z0-9._-]{1,120}$/.test(id)){
-      status.textContent='Enter a valid counter ID (letters, numbers, dots, underscores or hyphens).';
-      return;
-    }
-    const style=styleInput.value.trim();
-    if(!/^(?:0|[1-9][0-9]*)$/.test(style) || Number(style)>762){
-      status.textContent='Enter a whole-number style between 0 and 762.';
-      return;
-    }
-    // Read only: changing the ID or style must never call counter.php again.
-    demoImage.src='https://besucherzaehler.gratis/viewer.php?ID='
-      +encodeURIComponent(id)+'&STYLE='+encodeURIComponent(style);
-    demoImage.alt='Read-only counter preview for '+id;
-    demoLink.href='https://counter.gratis/?language=en&ID='+encodeURIComponent(id);
-    status.textContent='Read-only preview for '+id+' (style '+style+'). No visit recorded for this ID.';
-  }
-  document.getElementById('activate').addEventListener('click',showReadOnlyCounter);
-  input.addEventListener('change',function(){
-    if(input.value.trim()) showReadOnlyCounter();
-  });
-  styleInput.addEventListener('change',showReadOnlyCounter);
-  input.addEventListener('keydown',function(event){
-    if(event.key==='Enter'){
-      event.preventDefault();
-      document.getElementById('activate').click();
-    }
-  });
-  document.getElementById('copy').addEventListener('click',async function(){
-    code.focus();code.select();
-    try{await navigator.clipboard.writeText(code.value);copyStatus.textContent='Copied.';}
-    catch(e){copyStatus.textContent='Select and copy the highlighted HTML manually.';}
-  });
-})();
-</script>
+        <section class="panel" aria-labelledby="stats-title">
+            <h2 id="stats-title">Visitors vs. pageviews</h2>
+            <p><strong>Visitors</strong> and <strong>pageviews</strong> are different measures. Repeated visits or page loads may increase pageviews without increasing the unique visitor count for the same day. A visible counter is a simple indicator, not a replacement for a full analytics service.</p>
+            <p>The standard JavaScript embed can send extra context, such as the visited URL and referring page. The HTML-only example above cannot supply the same browser information.</p>
+            <div class="inline-links">
+                <a href="https://counter.gratis/methodology.php?language=en">Counting methodology ↗</a>
+                <a href="https://website-counter-guide.netlify.app/">Website Counter Guide ↗</a>
+                <a href="https://counter.gratis/?language=en">Counter generator ↗</a>
+            </div>
+        </section>
+    </main>
+    <footer>Independent GitHub Pages compatibility demo for <a href="https://counter.gratis/?language=en">counter.gratis</a>. This demonstration is not the counter service itself.</footer>
+    <script>
+        (function() {
+            'use strict';
+            const input = document.getElementById('counter-id');
+            const styleInput = document.getElementById('counter-style');
+            const status = document.getElementById('counter-status');
+            const code = document.getElementById('embed-code');
+            const copyStatus = document.getElementById('copy-status');
+            const demoImage = document.getElementById('cg_ebbbd');
+            const demoLink = document.getElementById('counter-link');
+
+            // Change the preview card background without reloading the counter.
+            const previewCard = document.getElementById('demo-output');
+            const backgroundPicker = document.getElementById('preview-background-color');
+            const backgroundSwatches = document.querySelectorAll('.preview-swatch');
+            function setPreviewBackground(color) {
+                previewCard.style.backgroundColor = color;
+                backgroundPicker.value = color;
+                backgroundSwatches.forEach(function(button) {
+                    button.setAttribute('aria-pressed', String(button.dataset.bg.toLowerCase() === color.toLowerCase()));
+                });
+            }
+            backgroundSwatches.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    setPreviewBackground(button.dataset.bg);
+                });
+            });
+            backgroundPicker.addEventListener('input', function() {
+                setPreviewBackground(backgroundPicker.value);
+            });
+
+            function showReadOnlyCounter() {
+                const id = input.value.trim() || 'ebbbd';
+                if (!/^[a-zA-Z0-9._-]{1,120}$/.test(id)) {
+                    status.textContent = 'Enter a valid counter ID (letters, numbers, dots, underscores or hyphens).';
+                    return;
+                }
+                const style = styleInput.value.trim();
+                if (!/^(?:0|[1-9][0-9]*)$/.test(style) || Number(style) > 762) {
+                    status.textContent = 'Enter a whole-number style between 0 and 762.';
+                    return;
+                }
+                // Read only: changing the ID or style must never call counter.php again.
+                demoImage.src = 'https://besucherzaehler.gratis/viewer.php?ID=' +
+                    encodeURIComponent(id) + '&STYLE=' + encodeURIComponent(style);
+                demoImage.alt = 'Read-only counter preview for ' + id;
+                demoLink.href = 'https://counter.gratis/?language=en&ID=' + encodeURIComponent(id);
+                status.textContent = 'Read-only preview for ' + id + ' (style ' + style + '). No visit recorded for this ID.';
+            }
+            document.getElementById('activate').addEventListener('click', showReadOnlyCounter);
+            input.addEventListener('change', function() {
+                if (input.value.trim()) showReadOnlyCounter();
+            });
+            styleInput.addEventListener('change', showReadOnlyCounter);
+            input.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    document.getElementById('activate').click();
+                }
+            });
+            document.getElementById('copy').addEventListener('click', async function() {
+                code.focus();
+                code.select();
+                try {
+                    await navigator.clipboard.writeText(code.value);
+                    copyStatus.textContent = 'Copied.';
+                } catch (e) {
+                    copyStatus.textContent = 'Select and copy the highlighted HTML manually.';
+                }
+            });
+        })();
+    </script>
+</body>
+
+</html>
 </body>
 </html>
